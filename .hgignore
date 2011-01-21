@@ -3,3 +3,5 @@ syntax: glob
 127*
 *.swp
 *.bak
+web2py/applications/welcome/**
+web2py/applications/examples/**
