@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from gluon.storage import Storage
 settings = Storage()
 
@@ -16,3 +17,10 @@ settings.email_sender = 'you@example.com'
 settings.email_login = ''
 settings.login_method = 'local'
 settings.login_config = ''
+
+import sys, os
+path = os.path.join(request.folder, 'modules')
+if not path in sys.path:
+    sys.path.append(path)
+
+from fbappauth import *

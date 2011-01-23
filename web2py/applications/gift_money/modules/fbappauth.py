@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-FB_AUTH_URL = 'https://graph.facebook.com/oauth/authorize?'
+fb_auth_url = 'https://graph.facebook.com/oauth/authorize?'
+app_url = 'http://apps.facebook.com/tao_tao'
 fb_oae = {
         'scope' : 'publish_stream',
         'title' : '壓歲錢',

@@ -1,17 +1,25 @@
 {{extend 'layout.html'}}
-<div id="content"></div>
+<div id="content"> <fb:serverfbml width="615" id="invite_box">
+
+<script type="text/fbml">
+<fb:request-form action="http://apps.facebook.com/tao_tao" method="POST" invite="true" type="Echo Type" content="Echo Content. <fb:req-choice url='http://apps.facebook.com/tao_tao/?choice=echo' label='Echo Label' />">
+<fb:multi-friend-selector showborder="false" bypass="cancel" cols=4 actiontext="Echo Action Text"/>
+</fb:request-form>
+</script>
+    
+</fb:serverfbml></div>
 <!-- Facebook JS SDK -->
 <div id="fb-root"></div>
 <script>
       window.fbAsyncInit = function() {
-          FB.init({appId: '{{=client_id}}', status: true, cookie: true,
+          FB.init({appId: '{{=session.app_id}}', status: true, cookie: true,
               logging : true, xfbml: true});
+          FB.Canvas.setSize();
           FB.getLoginStatus(function(response) {
-              //alert("your status: " + response.status);
-              //alert("your permissions: " + response.perms);
               if (response.session) {
                   // logged in and connected user, someone you know
-                  top.location.href = "{{=landing_url}}";
+                  // $("#invite_box").load("{{=URL('send_request')}}");
+                  // FB.XFBML.parse($("#invite_box")[0]);
                   } else {
                   // no user session available, someone you dont know
                   //alert("I don't know you. Gonna let you in first.");
@@ -24,7 +32,8 @@
         e.async = true;
         e.src = document.location.protocol +
                 '//connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);                                                       }());
+                    document.getElementById('fb-root').appendChild(e);
+            }());
 </script>
 </body>
 </html>
