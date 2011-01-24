@@ -18,5 +18,8 @@ def get_login_url():
     query = dict(client_id = fb_oae['id'], scope = fb_oae['scope'], redirect_uri = app_url)
     return unquote_plus(fb_auth_url + urlencode(query))
 
+def show_credit():
+    return 
+
 def send_request():
     return dict()
