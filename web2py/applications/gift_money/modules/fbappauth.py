@@ -1,9 +1,10 @@
-FB_AUTH_URL = 'https://graph.facebook.com/oauth/authorize?'
-APP_SCOPE = 'user_photos,publish_stream'
-APP_TITLE = 'Amazing Quiz'
-APP_URL = 'http://apps.facebook.com/amazing_quiz'
-CLIENT_ID = '175543849124765'
-CLIENT_SECRET = '71c2c6004acb13b998e0b7aed3caafd3'
-#APP_URL = 'http://apps.facebook.com/tao_tao'
-#CLIENT_ID = '130337413682434'
-#CLIENT_SECRET = 'cfe9c6f6d22669f7e91f30c0f60698a5'
+# -*- coding: utf-8 -*-
+fb_auth_url = 'https://graph.facebook.com/oauth/authorize?'
+app_url = 'http://apps.facebook.com/tao_tao'
+fb_oae = {
+        'scope' : 'publish_stream',
+        'title' : '壓歲錢',
+        'url'   : 'http://apps.facebook.com/tao_tao',
+        'id'    : '130337413682434',
+        'secret': 'cfe9c6f6d22669f7e91f30c0f60698a5',
+        }
