@@ -118,6 +118,6 @@ mail.settings.server = settings.email_server
 mail.settings.sender = settings.email_sender
 mail.settings.login = settings.email_login
 
-db.define_talbe('fb_user',
+db.define_table('fb_user',
         Field('uid', 'string', length=30),
         Field('credit', 'integer', default=500))

@@ -1,14 +1,6 @@
 {{extend 'layout.html'}}
-<div id="content"> <fb:serverfbml width="615" id="invite_box">
-
-<script type="text/fbml">
-<fb:request-form method="POST" invite="false" type="Husband Request" content="Where is my dinner? <fb:req-choice url='http://apps.facebook.com/tao_tao/?choice=echo' label='Cook it' />">
-<fb:multi-friend-selector showborder="false" bypass="cancel" cols=4 rows=4 actiontext="Send cooking request"/>
-</fb:request-form>
-<fb:req-choice url="http://apps.facebook.com/tao_tao" label="Confirm" />
-</script>
-    
-</fb:serverfbml></div>
+<div id="content">
+</div>
 <!-- Facebook JS SDK -->
 <div id="fb-root"></div>
 <script>
@@ -19,7 +11,7 @@
           FB.getLoginStatus(function(response) {
               if (response.session) {
                   // logged in and connected user, someone you know
-                  // $("#invite_box").load("{{=URL('send_request')}}");
+                  $("#content").load("URL('show_credit')");
                   // FB.XFBML.parse($("#invite_box")[0]);
                   } else {
                   // no user session available, someone you dont know

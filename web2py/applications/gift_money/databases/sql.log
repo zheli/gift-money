@@ -46,3 +46,10 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
+timestamp: 2011-01-24T17:12:38.809831
+CREATE TABLE fb_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uid CHAR(30),
+    credit INTEGER
+);
+success!

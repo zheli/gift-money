@@ -1,0 +1,14 @@
+(dp1
+S'credit'
+p2
+S'INTEGER'
+p3
+sS'id'
+p4
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p5
+sS'uid'
+p6
+S'CHAR(30)'
+p7
+s.
