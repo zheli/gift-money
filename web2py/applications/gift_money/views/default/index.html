@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-<div id="content">
+<div id="main_content">
 </div>
 <!-- Facebook JS SDK -->
 <div id="fb-root"></div>
@@ -11,7 +11,7 @@
           FB.getLoginStatus(function(response) {
               if (response.session) {
                   // logged in and connected user, someone you know
-                  $("#content").load("URL('show_credit')");
+                  $("#main_content").load("{{=URL('show_credit')}}.html");
                   // FB.XFBML.parse($("#invite_box")[0]);
                   } else {
                   // no user session available, someone you dont know

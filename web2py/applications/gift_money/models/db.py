@@ -120,4 +120,4 @@ mail.settings.login = settings.email_login
 
 db.define_table('fb_user',
         Field('uid', 'string', length=30),
-        Field('credit', 'integer', default=500))
+        Field('credit', 'integer', default=0))
