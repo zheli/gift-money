@@ -1,0 +1,22 @@
+.demo {
+ padding: 5px;
+}
+div {
+display:block;
+}
+.ui-tabs {
+padding: 0.2em;
+position: relative;
+zoom: 1;
+}
+/*.ui-widget-content {
+background: #eeeeee url(widget-content.png|0|0|100) 50% top repeat-x;
+color: #333333;
+}*/
+.ui-widget-header {
+background: #F6A828;
+border: 1px solid #E78F08;
+}
+.ui-tabss .ui-tabs-nav li a {
+float:left;
+}
