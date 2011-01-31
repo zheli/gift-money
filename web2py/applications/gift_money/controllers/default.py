@@ -50,5 +50,11 @@ def is_first_time_login(uid = session.user_id):
 def add_user(uid = session.user_id):
     return db.fb_user.insert(uid=uid)
 
+def demo():
+    return dict()
+
+def demo2():
+    return dict()
+
 def send_request():
     return dict()
