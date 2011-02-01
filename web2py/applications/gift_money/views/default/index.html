@@ -1,28 +1,31 @@
-{{extend 'layout.html'}}
-<!-- Facebook JS SDK -->
-<div id="fb-root"></div>
-<script>
-      window.fbAsyncInit = function() {
-          FB.init({appId: '{{=session.app_id}}', status: true, cookie: true,
-              logging : true, xfbml: true});
-          FB.Canvas.setSize();
-          FB.getLoginStatus(function(response) {
-              if (response.session) {
-                  // logged in and connected user, someone you know
-                  $("#main_content").load("{{=URL('show_credit')}}.html");
-                  // FB.XFBML.parse($("#invite_box")[0]);
-                  } else {
-                  // no user session available, someone you dont know
-                  //alert("I don't know you. Gonna let you in first.");
-                  top.location.href = "{{=login_url}}";
-              }
-          });
-        };
-    (function() {
-        var e = document.createElement('script'); 
-        e.async = true;
-        e.src = document.location.protocol +
-                '//connect.facebook.net/en_US/all.js';
-                    document.getElementById('fb-root').appendChild(e);
-            }());
-</script>
+{{extend 'mylayout.html'}}
+<div class="demo" style="width:710px; padding: 5px;">
+    <div id="tabs" class="ui-tabs">
+        <ul class="ui-widget-header">
+            <li><a href="#tabs-1">發紅包啦</a></li>
+            <li><a href="{{=URL('demo2')}}">Tab 1</a></li>
+            <li><a href="#tabs-2">Tab 2</a></li>
+        </ul>
+        <div id="tabs-1" style="height:490px;">
+            <div id="main_content" style="float:left;width:70%; margin-top: 2px; margin-bottom:2px;">
+                <div id="content_text" style="height: 260px;">
+                    <p>This is a test.</p>
+                </div>
+                <div id="big_button" style="height: 200px; margin: auto auto 5px 20px;"><img src="{{=URL('static','jquery-ui/button.png')}}"></img></div>
+                <script>
+                    $("#content_text").load('{{=URL('show_credit')}}');
+                </script>
+            </div>
+            <div id="log" style="width=30%;">
+                <p>This is the log table</p>
+            </div>
+        </div>
+        <div id="tabs-2" style="height:490px;">
+            <p>
+            <script>
+                FB.ui({method: 'apprequests', message: 'You should learn more about this awesome game.', data: 'tracking information for the user'});
+            </script>
+            </p>
+        </div>
+    </div>
+</div>

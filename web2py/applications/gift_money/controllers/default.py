@@ -51,6 +51,9 @@ def add_user(uid = session.user_id):
     return db.fb_user.insert(uid=uid)
 
 def demo():
+    update_session_token()
+    session.app_id = fb_oae['id']
+
     return dict()
 
 def demo2():

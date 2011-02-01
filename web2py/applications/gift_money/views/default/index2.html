@@ -1,0 +1,28 @@
+{{extend 'layout.html'}}
+<!-- Facebook JS SDK -->
+<div id="fb-root"></div>
+<script>
+      window.fbAsyncInit = function() {
+          FB.init({appId: '{{=session.app_id}}', status: true, cookie: true,
+              logging : true, xfbml: true});
+          FB.Canvas.setSize();
+          FB.getLoginStatus(function(response) {
+              if (response.session) {
+                  // logged in and connected user, someone you know
+                  $("#main_content").load("{{=URL('show_credit')}}.html");
+                  // FB.XFBML.parse($("#invite_box")[0]);
+                  } else {
+                  // no user session available, someone you dont know
+                  //alert("I don't know you. Gonna let you in first.");
+                  top.location.href = "{{=login_url}}";
+              }
+          });
+        };
+    (function() {
+        var e = document.createElement('script'); 
+        e.async = true;
+        e.src = document.location.protocol +
+                '//connect.facebook.net/en_US/all.js';
+                    document.getElementById('fb-root').appendChild(e);
+            }());
+</script>
