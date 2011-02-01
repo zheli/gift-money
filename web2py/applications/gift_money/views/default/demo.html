@@ -18,26 +18,39 @@
         <link href="{{=URL('static', 'jquery-ui/jquery-ui-1.8.9.custom.css')}}" rel="stylesheet" type="text/css">
         <link href="{{=URL('static', 'css/fb_main.css')}}" rel="stylesheet" type="text/css">
     </head>
-        <body> 
+    <body>
+        <div id="like_button" style="text-align:center;">
+            <fb:like href="http://apps.facebook.com/tao_tao/" show_faces="false" width="200" style="clear:both;"></fb:like>
+        </div>
+        <div id="main_content">
+            <div id="big_button"><img src="{{=URL('static','jquery-ui/button.png')}}"></img></div>
+        </div>
         <div class="demo" style="width:710px; padding: 5px;">
-        <div id="tabs" class="ui-tabs">
-            <ul class="ui-widget-header">
-                <li><a href="#tabs-1">發紅包啦</a></li>
-                <li><a href="{{=URL('demo2')}}">Tab 1</a></li>
-                <li><a href="#tabs-2">Tab 2</a></li>
-            </ul>
-            <div id="tabs-1" style="height:490px;">
-                <p>test</p>
-            </div>
-            <div id="tabs-2" style="height:490px;">
-                <p>
-                <script>
-                    FB.ui({method: 'apprequests', message: 'You should learn more about this awesome game.', data: 'tracking information for the user'});
-                </script>
-                </p>
+            <div id="tabs" class="ui-tabs">
+                <ul class="ui-widget-header">
+                    <li><a href="#tabs-1">發紅包啦</a></li>
+                    <li><a href="{{=URL('demo2')}}">Tab 1</a></li>
+                    <li><a href="#tabs-2">Tab 2</a></li>
+                </ul>
+                <div id="tabs-1" style="height:490px;">
+                    <div id="main_content" style="float:left;width:70%;">
+                        <p>This is a test.</p>
+                    </div>
+                    <div id="log" style="width=30%;">
+                        <p>This is the log table</p>
+                    </div>
+                </div>
+                <div id="tabs-2" style="height:490px;">
+                    <p>
+                    <script>
+                        FB.ui({method: 'apprequests', message: 'You should learn more about this awesome game.', data: 'tracking information for the user'});
+                    </script>
+                    </p>
+                </div>
             </div>
         </div>
-    </div><!-- End demo -->
+        <div 
+
     <!-- Facebook JS SDK -->
     <div id="fb-root"></div>
     <script>
