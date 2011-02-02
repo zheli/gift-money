@@ -107,14 +107,23 @@ def push_messages():
     graph = facebook.GraphAPI(session.oauth_token)
     if type(id_list) == type(list()):
         for id in id_list:
-            db_id= update_credit(id)
+            try:
+                db_id= update_credit(id)
+                add_log(db_id)
+                post_on_wall(graph, id)
+            except GraphAPIError:
+                logging.error("uid:[%s] post failed!" % id)
+                pass
+
+    elif type(id_list) == type(str()):
+        try:
+            id = id_list
+            db_id = update_credit(id)
             add_log(db_id)
             post_on_wall(graph, id)
-    elif type(id_list) == type(str()):
-        id = id_list
-        db_id = update_credit(id)
-        add_log(db_id)
-        post_on_wall(graph, id)
+        except GraphAPIError:
+            logging.error("uid:[%s] post failed!" % id)
+            pass
     else:
         pass
     return dict()
