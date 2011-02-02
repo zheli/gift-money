@@ -109,6 +109,7 @@ def send_request():
     return dict()
 
 def push_messages():
+    logging.debug("request: %s"  % request.vars)
     id_list = request.vars['id[]']
     graph = facebook.GraphAPI(session.oauth_token)
     if type(id_list) == type(list()):
@@ -122,6 +123,7 @@ def push_messages():
                 pass
     elif type(id_list) == type(str()):
         try:
+            logging.debug("send post to %s" % id_list)
             id = id_list
             db_id = update_credit(id)
             add_log(db_id)
