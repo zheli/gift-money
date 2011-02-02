@@ -1,0 +1,5 @@
+indexes:
+- kind: log
+  properties:
+  - name: receiver
+  - name: time

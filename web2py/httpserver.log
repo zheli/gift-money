@@ -5408,3 +5408,5 @@
 127.0.0.1, 2011-02-02 07:13:25, POST, /gift_money/default/, HTTP/1.1, 200, 0.031146
 127.0.0.1, 2011-02-02 07:13:26, POST, /gift_money/default/main, HTTP/1.1, 200, 0.017679
 127.0.0.1, 2011-02-02 07:13:26, GET, /gift_money/default/show_credit, HTTP/1.1, 200, 0.032579
+127.0.0.1, 2011-02-02 09:35:49, GET, /gift_money/default/, HTTP/1.1, 200, 0.321659
+127.0.0.1, 2011-02-02 09:37:48, GET, /gift_money/default/, HTTP/1.1, 200, 0.019809

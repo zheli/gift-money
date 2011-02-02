@@ -71,7 +71,6 @@ def get_log():
         user_id = session.me.id
         records = db(db.log.receiver == user_id).select(orderby=db.log.time)
         if len(records)>0:
-            logging.debug(records)
             return records
     except:
         pass
@@ -80,15 +79,21 @@ def get_log():
 
 def ranking():
     friends = get_app_friends()
+    logging.debug(friends)
     dict_data = {}
     if len(friends)>0:
         for friend_uid in friends:
             record = db(db.fb_user.uid==friend_uid).select().first()
-            dict_data[record.credit] = {'name': record.name,
-                                    'uid': record.uid}
+            logging.debug(record)
+            try:
+                dict_data[record.credit] = {'name': record.name,
+                                        'uid': record.uid}
+            except:
+                pass
         ranking = sorted(dict_data, reverse=True)
     else:
         ranking = None
+
     return dict(ranking = ranking, dict_data = dict_data)
 
 def get_app_friends():

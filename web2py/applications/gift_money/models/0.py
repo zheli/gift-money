@@ -2,7 +2,7 @@
 from gluon.storage import Storage
 settings = Storage()
 
-settings.migrate = True
+settings.migrate = False
 settings.title = '\xe5\x8e\x8b\xe5\xb2\x81\xe9\x92\xb1'
 settings.subtitle = 'powered by web2py'
 settings.author = 'Zhe'

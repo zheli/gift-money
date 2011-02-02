@@ -1,0 +1,4 @@
+cron:
+- description: ping website every 60 seconds
+  url: /gift_money/default/main
+  schedule: every 1 minutes

@@ -15,9 +15,8 @@
                     $("#content_text").load('{{=URL('show_credit')}}');
                     function SendRequest() {
                         box = new LightFace({
-                            dragable: true,
-                            content: '<div id="username"></div><p>請選擇收紅包的人：</p>\
-                            <div id="jfmfs-container"></div>',
+                            title: '發紅包給朋友',
+                            content: '<div id="username"></div><p>請選擇收紅包的人：</p><div id="jfmfs-container"></div>',
                             width: 700,
                             height: 476,
                             buttons: [
@@ -30,14 +29,11 @@
                                         url: "{{=URL('push_messages')}}",
                                         type: "POST",
                                         data: ({'id': friendSelector.getSelectedIds()}),
-                                        success: function(){
-                                                box.close();
-                                                },
-
+                                        success: function(){box.close();},
                                     });},
-                                color:'green'},
+                                color:'green',
+                            },
                             ],
-                            title: '發紅包給朋友',
                         }).open();
                         FB.api('/me', function(response) {
                           $("#username").html("<img src='https://graph.facebook.com/" + response.id + "/picture'/><div>" + response.name + "</div>");
@@ -51,26 +47,26 @@
                                         var y = b.last_name.toLowerCase();
                                         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                                                   }
-                                  });
+                                        });
                         $("#jfmfs-container").bind("jfmfs.friendload.finished", function() { 
-                          console.log("finished loading!"); 
-                        });
+                              console.log("finished loading!"); 
+                          });
                         $("#jfmfs-container").bind("jfmfs.selection.changed", function(e, data) { 
-                          console.log("changed", data);
-                        });                     
+                              console.log("changed", data);
+                          }); 
                         });
                     }
 
                 </script>
             </div>
             <div id="log" style="width=30%;">
-                <table>
+               <table>
                     <tbody style="font-size:13px; color:white; ">
                         <tr><td></td><td text-align="center">最近活動記錄</td></tr>
                         {{for record in log_records:}}
                         <tr>
-                            <td><img src='https://graph.facebook.com/{{=db.fb_user[record.receiver].uid}}/picture?type=square'/></td>
-                            <td><div>{{=db.fb_user[record.receiver].name}}送你一個紅包</div><div>{{=record.log.time}}</div></td>
+                            <td><img src='https://graph.facebook.com/{{=db.fb_user[record.sender].uid}}/picture?type=square'/></td>
+                            <td><div>{{=db.fb_user[record.sender].name}}送你一個紅包</div><div>{{=record.time}}</div></td>
                         </tr>
                         {{pass}}
                     </tbody>
