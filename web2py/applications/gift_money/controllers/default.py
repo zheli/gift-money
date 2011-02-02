@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ### required - do no delete
 import facebook
+from facebook import GraphAPIError
 import fb_helpers
 import logging
 logging.getLogger().setLevel(logging.ERROR)
@@ -114,7 +115,6 @@ def push_messages():
             except GraphAPIError:
                 logging.error("uid:[%s] post failed!" % id)
                 pass
-
     elif type(id_list) == type(str()):
         try:
             id = id_list
