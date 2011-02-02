@@ -24,6 +24,9 @@
                                 title:'發送', 
                                 event: function (){
                                     var friendSelector = $("#jfmfs-container").data('jfmfs');
+                                    var progress_gif_url = "{{=URL('static', 'images/progress.gif')}}";
+                                    $("#jfmfs-container").html('<div style="text-align:center;clear:both;"><img src="'+progress_gif_url+'"/></div>');
+                                    this.close();
                                     $.ajax(
                                     {
                                         url: "{{=URL('push_messages')}}",
