@@ -69,8 +69,8 @@
                         <tr><td></td><td text-align="center">最近活動記錄</td></tr>
                         {{for record in log_records:}}
                         <tr>
-                            <td><img src='https://graph.facebook.com/{{=record.fb_user.uid}}/picture?type=square'/></td>
-                            <td><div>{{=record.fb_user.name}}送你一個紅包</div><div>{{=record.log.time}}</div></td>
+                            <td><img src='https://graph.facebook.com/{{=db.fb_user[record.receiver].uid}}/picture?type=square'/></td>
+                            <td><div>{{=db.fb_user[record.receiver].name}}送你一個紅包</div><div>{{=record.log.time}}</div></td>
                         </tr>
                         {{pass}}
                     </tbody>

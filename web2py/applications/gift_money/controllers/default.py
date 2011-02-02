@@ -68,13 +68,10 @@ def get_log():
     result = []
     try:
         user_id = session.me.id
-        records = db(db.log.receiver == user_id).select(db.fb_user.ALL,db.log.ALL, left=db.fb_user.on(db.log.sender == db.fb_user.id), orderby=db.log.time)
+        records = db(db.log.receiver == user_id).select(orderby=db.log.time)
         if len(records)>0:
+            logging.debug(records)
             return records
-            for record in records:
-                #result = result + TR(TD(record.fb_user['name']), TD(record.log.time))
-                im = TR(TD(record.fb_user.name), TD(record.log.time))
-                result = result + im
     except:
         pass
 
@@ -126,7 +123,7 @@ def post_on_wall(graph = None, id = None):
     if id and graph:
         graph.put_object(id, 'feed',
                 message=u'過年可不要忘了壓歲錢哦！'.encode('utf-8'),
-                picture = u'http://174.120.145.163:82/gate/big5/www.sinovision.net/attachments/2011/01/11/18879698744d2ca0553d446.jpg',
+                picture = u'http://lucky-money.appspot.com/gift_money/static/images/logo.jpg',
                 name=u'%s剛剛給你了一個紅包'.encode('utf-8') % session.me['name'],
                 link=u'http://apps.facebook.com/lucky_money/',
                 description=u'新年行大運！我剛剛給你包了一個紅包，今年要乖乖的喲！'.encode('utf-8'),

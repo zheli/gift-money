@@ -12,8 +12,8 @@ if request.env.web2py_runtime_gae:            # if running on Google App Engine
     # from gluon.contrib.memdb import MEMDB
     # from google.appengine.api.memcache import Client
     # session.connect(request, response, db = MEMDB(Client()))
-else:                                         # else use a normal relational database
-    db = DAL('sqlite://storage.sqlite')       # if not, use SQLite or other DB
+#else:                                         # else use a normal relational database
+#    db = DAL('sqlite://storage.sqlite')       # if not, use SQLite or other DB
 ## if no need for session
 # session.forget()
 
