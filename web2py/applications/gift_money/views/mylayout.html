@@ -15,7 +15,7 @@
         ajaxOptions: {
             error: function( xhr, status, index, anchor ) {
                 $( anchor.hash ).html(
-                    "Couldn't load this tab. We'll try to fix this as soon as possible.");
+                    "還是空的呢，趕快叫你朋友一起加入吧！");
                      }
                 }
         });
@@ -30,6 +30,14 @@
         </div>
         <div id="main_content">
 	    {{include}}	
+        </div>
+        <div id="ads">
+        <!-- Begin Ad Call Tag - Do not Modify -->
+        <iframe width='728' height='90' frameborder='no' framespacing='0' scrolling='no'  src='http://ads.lfstmedia.com/fbslot/slot14036?ad_size=728x90&adkey=02b'></iframe>
+        <!-- End of Ad Call Tag -->
+        </div>
+        <div id="footer" style="font-size:12px; text-align:center; clear:both; padding: 12px;">
+            <a href="http://blog.systemsthoughts.com/" target="_blank">軟體作者部落格</a>
         </div>
         <!-- Facebook JS SDK -->
         <div id="fb-root"></div>

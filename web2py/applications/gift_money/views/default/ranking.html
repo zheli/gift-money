@@ -1,0 +1,21 @@
+<div id="main_content" style="">
+    <div id="mini_header" style="padding:10px; margin:0px; text-align:center;font-size:2em;color:yellow">
+        看看今年誰收紅包最多
+    </div>
+    <div id="content_table" style="padding:10px; margin:0px;" >
+        <table style="text-align:center; color:yellow">
+            <tbody>
+                {{if ranking:}}
+                    {{for i in ranking:}}
+                    <tr>
+                        <td><img src='https://graph.facebook.com/{{=dict_data[i]['uid']}}/picture?type=square'/></td>
+                        <td>{{=dict_data[i]['name']}}今年拿到了{{=i}}個紅包</td>
+                    </tr>
+                    {{pass}}
+                {{else:}}
+                <tr><td>你的朋友還沒加入呢，是不是忘了送紅包了:)</td></tr>
+                {{pass}}
+            </tbody>
+        </table>
+    </div>
+</div>

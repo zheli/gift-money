@@ -16,20 +16,20 @@ def index():
     return dict(request_string = XML(urlencode(request.vars)))
 
 def main():
-    print request.vars['signed_request']
+    #print request.vars['signed_request']
     update_session_token()
     session.app_id = fb_oae['id']
     record_id = update_user_info_in_db()
     if record_id:
         record_me = db.fb_user(record_id)
     else:
-        record_me = db(db.fb_user.uid == session.user_id).select().first()
+        record_me = db(db.fb_user.uid == session.uid).select().first()
     session.me = record_me
-    return dict(name = record_me['name'], login_url = XML(get_login_url()))
+    return dict(name = record_me['name'], login_url = XML(get_login_url()), log_records = get_log())
 
 def update_user_info_in_db():
-    if is_first_time_login(session.user_id):
-        return add_user(session.user_id)
+    if is_first_time_login(session.uid):
+        return add_user(session.uid)
     else:
         return None
 
@@ -42,36 +42,65 @@ def get_login_url():
     return unquote_plus(fb_auth_url + urlencode(query))
 
 def show_credit():
-    record_me = db(db.fb_user.uid == session.user_id).select().first()
+    record_me = db(db.fb_user.uid == session.uid).select().first()
     logging.info(record_me)
     return dict(record = record_me)
 
 def update_session_token():
     try:
         token = facebook.get_user_from_cookie(request.cookies, fb_oae['id'], fb_oae['secret'])
-        session.user_id     = token['uid']
+        session.uid     = token['uid']
         session.oauth_token = token['access_token']
     except:
-        session.oauth_token, session.user_id = \
+        session.oauth_token, session.uid = \
                 fb_helpers.signed_request_getTokenWithID(\
                 request.vars['signed_request'], fb_oae['secret'])
 
-def is_first_time_login(uid = session.user_id):
+def is_first_time_login(uid = session.uid):
     return (len(db(db.fb_user.uid == uid).select(db.fb_user.ALL)) == 0)
 
-def add_user(uid = session.user_id):
+def add_user(uid = session.uid):
     graph = facebook.GraphAPI(session.oauth_token)
     user = graph.get_object(uid)
     return db.fb_user.insert(uid=uid, first_name=user['first_name'], name=user['name'])
 
-def demo():
-    update_session_token()
-    session.app_id = fb_oae['id']
+def get_log():
+    result = []
+    try:
+        user_id = session.me.id
+        records = db(db.log.receiver == user_id).select(db.fb_user.ALL,db.log.ALL, left=db.fb_user.on(db.log.sender == db.fb_user.id), orderby=db.log.time)
+        if len(records)>0:
+            return records
+            for record in records:
+                #result = result + TR(TD(record.fb_user['name']), TD(record.log.time))
+                im = TR(TD(record.fb_user.name), TD(record.log.time))
+                result = result + im
+    except:
+        pass
 
-    return dict()
+    return result
 
-def demo2():
-    return dict()
+def ranking():
+    friends = get_app_friends()
+    dict_data = {}
+    if len(friends)>0:
+        for friend_uid in friends:
+            record = db(db.fb_user.uid==friend_uid).select().first()
+            dict_data[record.credit] = {'name': record.name,
+                                    'uid': record.uid}
+        ranking = sorted(dict_data, reverse=True)
+    else:
+        ranking = None
+    return dict(ranking = ranking, dict_data = dict_data)
+
+def get_app_friends():
+    friends = []
+    try:
+        graph = facebook.GraphAPI(session.oauth_token)
+        friends = [str(i) for i in graph.get_app_connections()]
+    except facebook.GraphAPIError:
+        logging.error('GraphAPIError! user_id: [%s] token: [%s]' % (session.me['uid'], session.oauth_token))
+    return friends
 
 def send_request():
     return dict()
@@ -107,7 +136,6 @@ def update_credit(id = None):
     if id:
         if is_first_time_login(id):
             record_id = add_user(id)
-            db.fb_user[record_id].update_record(credit=int(1))
             return record_id
         else:
             record = db(db.fb_user.uid == id).select().first()
@@ -116,4 +144,4 @@ def update_credit(id = None):
 
 def add_log(id = None):
     if id and session.me['uid']:
-        db.log.insert(sender = session.me['uid'], receiver = id)
+        db.log.insert(sender = session.me.id, receiver = id)

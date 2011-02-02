@@ -3,7 +3,7 @@
     <div id="tabs" class="ui-tabs">
         <ul class="ui-widget-header">
             <li><a href="#tabs-1">發紅包啦</a></li>
-            <li><a href="{{=URL('demo2')}}">Tab 1</a></li>
+            <li><a href="{{=URL('ranking')}}">看看今年誰拿的最多</a></li>
         </ul>
         <div id="tabs-1" style="height:490px;">
             <div id="main_content" style="float:left;width:70%; margin-top: 2px; margin-bottom:2px;">
@@ -65,7 +65,15 @@
             </div>
             <div id="log" style="width=30%;">
                 <table>
-                    <td>test</td>
+                    <tbody style="font-size:13px; color:white; ">
+                        <tr><td></td><td text-align="center">最近活動記錄</td></tr>
+                        {{for record in log_records:}}
+                        <tr>
+                            <td><img src='https://graph.facebook.com/{{=record.fb_user.uid}}/picture?type=square'/></td>
+                            <td><div>{{=record.fb_user.name}}送你一個紅包</div><div>{{=record.log.time}}</div></td>
+                        </tr>
+                        {{pass}}
+                    </tbody>
                 </table>
             </div>
         </div>
