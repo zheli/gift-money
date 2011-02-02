@@ -53,3 +53,15 @@ CREATE TABLE fb_user(
     credit INTEGER
 );
 success!
+timestamp: 2011-02-01T22:39:08.349896
+ALTER TABLE fb_user ADD first_name CHAR(30);
+timestamp: 2011-02-01T22:39:08.495427
+ALTER TABLE fb_user ADD name CHAR(30);
+timestamp: 2011-02-02T02:53:12.907720
+CREATE TABLE log(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    sender INTEGER REFERENCES fb_user(id) ON DELETE CASCADE,
+    receiver INTEGER REFERENCES fb_user(id) ON DELETE CASCADE,
+    time TIMESTAMP
+);
+success!

@@ -1,0 +1,73 @@
+{{extend 'mylayout.html'}}
+<div class="demo" style="width:720px; padding: 5px;">
+    <div id="tabs" class="ui-tabs">
+        <ul class="ui-widget-header">
+            <li><a href="#tabs-1">發紅包啦</a></li>
+            <li><a href="{{=URL('demo2')}}">Tab 1</a></li>
+        </ul>
+        <div id="tabs-1" style="height:490px;">
+            <div id="main_content" style="float:left;width:70%; margin-top: 2px; margin-bottom:2px;">
+                <div id="content_text" style="height: 200px; color:yellow; font-size: 3em; text-align:center; padding-top:30px;">
+                    <p>正在載入...</p>
+                </div>
+                <div id="big_button" style="height: 200px; margin: auto auto 5px 20px;"><a href="javascript:SendRequest()"><img src="{{=URL('static','jquery-ui/button.png')}}" /></a></div>
+                <script>
+                    $("#content_text").load('{{=URL('show_credit')}}');
+                    function SendRequest() {
+                        box = new LightFace({
+                            dragable: true,
+                            content: '<div id="username"></div><p>請選擇收紅包的人：</p>\
+                            <div id="jfmfs-container"></div>',
+                            width: 700,
+                            height: 476,
+                            buttons: [
+                            {
+                                title:'發送', 
+                                event: function (){
+                                    var friendSelector = $("#jfmfs-container").data('jfmfs');
+                                    $.ajax(
+                                    {
+                                        url: "{{=URL('push_messages')}}",
+                                        type: "POST",
+                                        data: ({'id': friendSelector.getSelectedIds()}),
+                                        success: function(){
+                                                box.close();
+                                                },
+
+                                    });},
+                                color:'green'},
+                            ],
+                            title: '發紅包給朋友',
+                        }).open();
+                        FB.api('/me', function(response) {
+                          $("#username").html("<img src='https://graph.facebook.com/" + response.id + "/picture'/><div>" + response.name + "</div>");
+
+                        $("#jfmfs-container").jfmfs({ 
+                                                  friend_fields: "id,name,last_name",
+                                                  pre_selected_friends: [],
+                                                  exclude_friends: [],
+                                                  sorter: function(a, b) {
+                                        var x = a.last_name.toLowerCase();
+                                        var y = b.last_name.toLowerCase();
+                                        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                                                  }
+                                  });
+                        $("#jfmfs-container").bind("jfmfs.friendload.finished", function() { 
+                          console.log("finished loading!"); 
+                        });
+                        $("#jfmfs-container").bind("jfmfs.selection.changed", function(e, data) { 
+                          console.log("changed", data);
+                        });                     
+                        });
+                    }
+
+                </script>
+            </div>
+            <div id="log" style="width=30%;">
+                <table>
+                    <td>test</td>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

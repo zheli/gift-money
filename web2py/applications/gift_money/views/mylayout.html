@@ -2,7 +2,14 @@
     <head>
     <script src="{{=URL('static', 'jquery-ui/jquery-1.4.4.min.js')}}" type="text/javascript"></script>
     <script src="{{=URL('static', 'jquery-ui/jquery-ui-1.8.9.custom.min.js')}}" type="text/javascript"></script>
-        <script>
+    <script type="text/javascript" src="{{=URL('static', 'jquery.facebook.multifriend.select.js')}}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.3.0/mootools-yui-compressed.js"></script>
+    <script type="text/javascript" src="{{=URL('static', 'lightface/LightFace.js')}}"></script>
+    <script type="text/javascript" src="{{=URL('static', 'lightface/LightFace.Request.js')}}"></script>
+    <link rel="stylesheet" href="{{=URL('static', 'lightface/LightFace.css')}}" />
+    <link rel="stylesheet" href="{{=URL('static', 'jquery.facebook.multifriend.select.css')}}" />
+
+    <script>
         $(function() {
         $( "#tabs" ).tabs({
         ajaxOptions: {
@@ -19,7 +26,7 @@
     </head>
     <body>
         <div id="like_button" style="text-align:center;">
-            <fb:like href="http://apps.facebook.com/tao_tao/" show_faces="false" width="200" style="clear:both;"></fb:like>
+            <fb:like href="http://apps.facebook.com/lucky_money/" show_faces="false" width="200" style="clear:both;"></fb:like>
         </div>
         <div id="main_content">
 	    {{include}}	
@@ -28,7 +35,7 @@
         <div id="fb-root"></div>
         <script>
               window.fbAsyncInit = function() {
-                  FB.init({appId: '130337413682434', status: true, cookie: true,
+                  FB.init({appId: '140926039267506', status: true, cookie: true,
                       logging : true, xfbml: true});
                   FB.Canvas.setSize();
                   FB.getLoginStatus(function(response) {
@@ -39,6 +46,7 @@
                           } else {
                           // no user session available, someone you dont know
                           //alert("I don't know you. Gonna let you in first.");
+                          top.location.href="https://graph.facebook.com/oauth/authorize?scope=publish_stream&redirect_uri=http://apps.facebook.com/lucky_money/&client_id=140926039267506";
                       }
                   });
                 };

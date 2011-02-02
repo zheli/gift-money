@@ -3,7 +3,7 @@
 import facebook
 import fb_helpers
 import logging
-logging.getLogger().setLevel(logging.INFO)
+logging.getLogger().setLevel(logging.ERROR)
 
 def user(): return dict(form=auth())
 def download(): return response.download(request,db)
@@ -12,9 +12,26 @@ def call():
     return service()
 ### end requires
 def index():
+    from urllib import urlencode, unquote_plus
+    return dict(request_string = XML(urlencode(request.vars)))
+
+def main():
+    print request.vars['signed_request']
     update_session_token()
     session.app_id = fb_oae['id']
-    return dict(login_url = XML(get_login_url()))
+    record_id = update_user_info_in_db()
+    if record_id:
+        record_me = db.fb_user(record_id)
+    else:
+        record_me = db(db.fb_user.uid == session.user_id).select().first()
+    session.me = record_me
+    return dict(name = record_me['name'], login_url = XML(get_login_url()))
+
+def update_user_info_in_db():
+    if is_first_time_login(session.user_id):
+        return add_user(session.user_id)
+    else:
+        return None
 
 def error():
     return dict()
@@ -25,14 +42,9 @@ def get_login_url():
     return unquote_plus(fb_auth_url + urlencode(query))
 
 def show_credit():
-    if is_first_time_login(session.user_id):
-        first_time = True
-        record_me = db.fb_user[add_user(session.user_id)]
-    else:
-        first_time = False
-        record_me = db(db.fb_user.uid == session.user_id).select().first()
+    record_me = db(db.fb_user.uid == session.user_id).select().first()
     logging.info(record_me)
-    return dict(record = record_me, first_time=first_time)
+    return dict(record = record_me)
 
 def update_session_token():
     try:
@@ -48,7 +60,9 @@ def is_first_time_login(uid = session.user_id):
     return (len(db(db.fb_user.uid == uid).select(db.fb_user.ALL)) == 0)
 
 def add_user(uid = session.user_id):
-    return db.fb_user.insert(uid=uid)
+    graph = facebook.GraphAPI(session.oauth_token)
+    user = graph.get_object(uid)
+    return db.fb_user.insert(uid=uid, first_name=user['first_name'], name=user['name'])
 
 def demo():
     update_session_token()
@@ -61,3 +75,45 @@ def demo2():
 
 def send_request():
     return dict()
+
+def push_messages():
+    id_list = request.vars['id[]']
+    graph = facebook.GraphAPI(session.oauth_token)
+    if type(id_list) == type(list()):
+        for id in id_list:
+            db_id= update_credit(id)
+            add_log(db_id)
+            post_on_wall(graph, id)
+    elif type(id_list) == type(str()):
+        id = id_list
+        db_id = update_credit(id)
+        add_log(db_id)
+        post_on_wall(graph, id)
+    else:
+        pass
+    return dict()
+
+def post_on_wall(graph = None, id = None):
+    if id and graph:
+        graph.put_object(id, 'feed',
+                message=u'過年可不要忘了壓歲錢哦！'.encode('utf-8'),
+                picture = u'http://174.120.145.163:82/gate/big5/www.sinovision.net/attachments/2011/01/11/18879698744d2ca0553d446.jpg',
+                name=u'%s剛剛給你了一個紅包'.encode('utf-8') % session.me['name'],
+                link=u'http://apps.facebook.com/lucky_money/',
+                description=u'新年行大運！我剛剛給你包了一個紅包，今年要乖乖的喲！'.encode('utf-8'),
+                )
+
+def update_credit(id = None):
+    if id:
+        if is_first_time_login(id):
+            record_id = add_user(id)
+            db.fb_user[record_id].update_record(credit=int(1))
+            return record_id
+        else:
+            record = db(db.fb_user.uid == id).select().first()
+            record.update_record(credit = record.credit + 1)
+            return record.id
+
+def add_log(id = None):
+    if id and session.me['uid']:
+        db.log.insert(sender = session.me['uid'], receiver = id)

@@ -120,4 +120,12 @@ mail.settings.login = settings.email_login
 
 db.define_table('fb_user',
         Field('uid', 'string', length=30),
+        Field('first_name', 'string', length=30),
+        Field('name', 'string', length=30),
         Field('credit', 'integer', default=0))
+
+db.define_table('log',
+        Field('sender', db.fb_user),
+        Field('receiver', db.fb_user),
+        Field('time', 'datetime', default=request.now),
+        )
